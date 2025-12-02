@@ -1,4 +1,9 @@
 import pandas as pd
+import sys
+import os
+
+# Add the parent directory of 'src' to the system path
+sys.path.insert(0, os.path.abspath(os.path.join(os.getcwd(), os.pardir))) 
 from src.power_forecaster import PowerForecaster
 
 def create_comparison_table(metrics_dict):
@@ -17,8 +22,8 @@ def main_demo():
     forecaster = PowerForecaster(data_dir='./inputs', output_dir='./outputs')
     
     SITE_IDX = 1
-    START_TIME = '2023-01-01 00:00:00'
-    END_TIME = '2023-01-07 23:00:00'
+    START_TIME = '2017-02-01 00:00:00'
+    END_TIME = '2021-12-31 23:00:00'
 
     # --- Step 1: Load and Plot Time Series ---
     print(f"\n1. Generating timeseries plots for Site {SITE_IDX}...")
