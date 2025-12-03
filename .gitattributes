@@ -1,1 +1,2 @@
+outputs/trained_models/*.pkl filter=lfs diff=lfs merge=lfs -text
 outputs/trained_models/RandomForest_site1.pkl filter=lfs diff=lfs merge=lfs -text
