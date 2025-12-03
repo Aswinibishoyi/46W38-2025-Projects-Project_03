@@ -2,8 +2,14 @@ import pandas as pd
 import sys
 import os
 
-# Add the parent directory of 'src' to the system path
-sys.path.insert(0, os.path.abspath(os.path.join(os.getcwd(), os.pardir))) 
+# Define project_root explicitly to ensure it's accessible and correct for path modification
+project_root = 'D:/Project03_46W38'
+sys.path.insert(0, project_root)
+# Add the project_root to the system path so Python can find the 'src' directory
+if project_root not in sys.path:
+    sys.sys.path.insert(0, project_root)
+
+# Now, import the PowerForecaster class from src.power_forecaster
 from src.power_forecaster import PowerForecaster
 
 def create_comparison_table(metrics_dict):
@@ -17,10 +23,10 @@ def create_comparison_table(metrics_dict):
 
 def main_demo():
     print("Starting Project03_46W38 Demonstration...")
-    
-    # Initialize the forecaster class
-    forecaster = PowerForecaster(data_dir='./inputs', output_dir='./outputs')
-    
+
+    # Initialize the forecaster class with correct absolute paths
+    forecaster = PowerForecaster(data_dir=os.path.join(project_root, 'inputs'), output_dir=os.path.join(project_root, 'outputs'))
+
     SITE_IDX = 1
     START_TIME = '2017-02-01 00:00:00'
     END_TIME = '2021-12-31 23:00:00'
@@ -28,15 +34,15 @@ def main_demo():
     # --- Step 1: Load and Plot Time Series ---
     print(f"\n1. Generating timeseries plots for Site {SITE_IDX}...")
     forecaster.plot_timeseries(
-        variable_name='windspeed_100m', 
-        site_index=SITE_IDX, 
-        starting_time=START_TIME, 
+        variable_name='windspeed_100m',
+        site_index=SITE_IDX,
+        starting_time=START_TIME,
         ending_time=END_TIME
     )
     forecaster.plot_timeseries(
-        variable_name='Power', 
-        site_index=SITE_IDX, 
-        starting_time=START_TIME, 
+        variable_name='Power',
+        site_index=SITE_IDX,
+        starting_time=START_TIME,
         ending_time=END_TIME
     )
 
@@ -48,12 +54,12 @@ def main_demo():
 
     # --- Step 3: Evaluate Models and Create Comparison Table ---
     print(f"\n3. Evaluating persistence model and ML models for Site {SITE_IDX}...")
-    
+
     metrics = {}
-    
+
     # Evaluate Persistence Model
     metrics['Persistence'], _, _ = forecaster.evaluate_persistence_model(site_index=SITE_IDX)
-    
+
     # Evaluate SVR
     metrics['SVR'], _, _ = forecaster.evaluate_model(site_index=SITE_IDX, model_name='SVR')
 
@@ -65,8 +71,8 @@ def main_demo():
     # --- Step 4: Plot Predictions for a Specific Period ---
     print(f"\n4. Generating prediction plots for Site {SITE_IDX} in the test period...")
     # Using a shorter specific period within the test set for clear visualization
-    PLOT_START = '2023-11-01 00:00:00'
-    PLOT_END = '2023-11-07 00:00:00'
+    PLOT_START = '2020-11-01 00:00:00'
+    PLOT_END = '2021-11-07 00:00:00'
 
     forecaster.plot_predictions(
         site_index=SITE_IDX,
@@ -74,7 +80,7 @@ def main_demo():
         starting_time=PLOT_START,
         ending_time=PLOT_END
     )
-    
+
     forecaster.plot_predictions(
         site_index=SITE_IDX,
         model_name='SVR',
@@ -88,8 +94,6 @@ if __name__ == "__main__":
     # In a real setup, ensure inputs exist before running.
     # We run in "demo" mode which trains and saves models as needed.
     main_demo()
-
-
 
 
 
