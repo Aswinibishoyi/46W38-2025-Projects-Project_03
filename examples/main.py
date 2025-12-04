@@ -40,7 +40,7 @@ def main_demo():
     # Initialize the forecaster class with correct absolute paths
     # (Update paths as necessary for your specific environment)
     forecaster = PowerForecaster(data_dir=inputs_folder, output_dir=output_folder)
-    SITE_IDX = 4
+    SITE_IDX = 2
     START_TIME = '2017-02-01 00:00:00'
     END_TIME = '2021-12-31 23:00:00'
     PLOT_START = '2020-11-01 00:00:00'
