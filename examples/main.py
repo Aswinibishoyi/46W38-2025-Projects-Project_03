@@ -3,10 +3,22 @@ import sys
 import os
 
 import os
-# Assuming PowerForecaster is defined in a module named 'power_forecaster'
-from src.power_forecaster import PowerForecaster , EDAAnalyzer
+
+import sys
+import os
+
+
 # Define project_root explicitly to ensure it's accessible and correct for path modification
 project_root = 'D:/Project03_46W38'
+# Get the path to the project root directory and add it to the Python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(project_root)
+
+
+
+# Assuming PowerForecaster is defined in a module named 'power_forecaster'
+from src.power_forecaster import PowerForecaster , EDAAnalyzer
+
 
 # This line was causing a SyntaxError. It appears to be an unassigned string.
 # /My Drive/Colab Notebooks/46W38 Scientific Programming in Wind Energy/Proj2
